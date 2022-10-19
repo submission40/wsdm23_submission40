@@ -9,8 +9,14 @@ TODO :
 - share code to compute all metrics and plot graphs
 
 STEP 1 :
-- download MPD
-- run formatting script
+- download MPD https://www.aicrowd.com/challenges/spotify-million-playlist-dataset-challenge/dataset_files#:~:text=spotify_million_playlist_dataset.zip%20(5.39%20GB)
+unzip all files in ressources/data/raw_MPD
+- run formatting script for rta_models
+
+```
+python src/preprocessing/format_rta_input.py ressources/data/raw_MPD/ ressources/data/rta_input
+```
+- run formatting script for baseline models
 - separate train / validation / test
 
 STEP 2 :
