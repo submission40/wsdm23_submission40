@@ -1,9 +1,8 @@
 import torch
-import torch.nn as nn
 import torch.nn.functional as F
 import numpy as np
 from src.rta.utils import padded_avg, get_device
-from src.data_manager import TransformerTrainDataset, pad_collate_transformer
+from src.data_manager.data_manager import TransformerTrainDataset, pad_collate_transformer
 from torch.nn.utils import clip_grad_norm_
 from torch.utils.data import DataLoader
 import tqdm
