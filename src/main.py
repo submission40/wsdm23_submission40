@@ -1,21 +1,11 @@
 import pickle, argparse
 
-from src.gated_cnn import RegressionGatedCNN
-from src.evaluator import Evaluator
-from src.data_manager import DataManager, EvaluationDataset, SequentialTrainDataset, TransformerTrainDataset, pad_collate, pad_collate_transformer
-from src.model import ChartsModel, CompletionModel, MatrixFactorizationModel, ItemItemModel, UserUserModel, EnsembleModel
+from src.data_manager.data_manager import DataManager
 
-import implicit
 from src.rta.utils import get_device
 from src.rta.rta_model import RTAModel
-from src.rta.aggregator.base import AggregatorBase
-from src.rta.aggregator.decoder import DecoderModel
 from src.rta.aggregator.gru import GRUNet
 from src.rta.representer.base_representer import BaseEmbeddingRepresenter
-from src.rta.representer.attention_representer import AttentionFMRepresenter
-from src.rta.representer.fm_representer  import FMRepresenter
-
-
 
 if __name__ == "__main__":
       parser = argparse.ArgumentParser()
