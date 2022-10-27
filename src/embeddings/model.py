@@ -6,11 +6,11 @@ import implicit
 from math import ceil
 from scipy.sparse import csr_matrix, load_npz, save_npz
 from functools import reduce
+import os
 import operator
 import random
 import torch
 from src.data_manager.data_manager import DataManager
-
 class CompletionModel():
   '''
   An abstract class for completion models.
@@ -130,8 +130,9 @@ class MatrixFactorizationModel(CompletionModel):
   # for songs in the train set. Validation playlists are completed by creating an
   # embedding for them that is the average of songs in the playlists, and then finding
   # nearest neighbours in the embedded space
-  def __init__(self, data_manager, foldername="data/models/mf", emb_size= 128, retrain=False, name='mf_model'):
+  def __init__(self, data_manager, foldername="ressources/data/embeddings", emb_size= 128, retrain=False, name='mf_model'):
     self.foldername = foldername
+    os.makedirs(self.foldername, exist_ok=True)
     self.emb_size = emb_size
     self.data_manager = data_manager
     self.prepare_item_factors(retrain=retrain)
@@ -144,18 +145,16 @@ class MatrixFactorizationModel(CompletionModel):
       else:
         use_gpu = False
         print("No GPU found, training will be very slow!")
-      try :
-        als_model = implicit.als.AlternatingLeastSquares(factors=self.emb_size, calculate_training_loss=True, iterations=10, regularization=12, use_gpu=use_gpu, use_cg=True, use_native=False)
-        # hyperparameters were tuned with prior Optuna study
-        als_model.fit(self.data_manager.binary_train_set)
-        # annoying but necessary trick
-        self.item_factors = als_model.user_factors
-        np.save('%s/item_factors_%d' % (self.foldername, self.emb_size), self.item_factors)
-      except AttributeError:
-        print("if retrain is True a sparse binary train set must be given as input")
+      als_model = implicit.als.AlternatingLeastSquares(factors=self.emb_size, calculate_training_loss=True, iterations=10, regularization=12, use_gpu=use_gpu, use_cg=True, use_native=False, )
+      # hyperparameters were tuned with prior Optuna study
+      als_model.fit(self.data_manager.binary_train_set)
+      # annoying but necessary trick
+      np.save('%s/song_embeddings_%d' % (self.foldername, self.emb_size), als_model.item_factors.to_numpy())
+
+      print("if retrain is True a sparse binary train set must be given as input")
       
     else:
-      self.item_factors = np.load('%s/embeddings/song_embeddings_%d.npy' % (self.foldername, self.emb_size))
+      self.item_factors = np.load('%s/song_embeddings_%d.npy' % (self.foldername, self.emb_size))
   
   def build_playlist_vector(self, playlist_tracks):
     count = 0

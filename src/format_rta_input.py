@@ -278,17 +278,17 @@ def create_side_embeddings(data_manager):
 if __name__ == "__main__":
     raw_path = sys.argv[1]
     out_path = sys.argv[2]
-    """process_mpd(raw_path, out_path)
-    save_npz('%s/playlist_track.npz' % out_path, playlist_track.tocsr(False))
-    with open('%s/tracks_info.json' % out_path, 'w') as fp:
-      json.dump(tracks_info, fp, indent=4)"""
-    #create_initial_embeddings()
-    with open("%s/tracks_info.json" % out_path) as f :
-      tracks_info = json.load(f)
+    os.makedirs(out_path, exist_ok=True)
+    #process_mpd(raw_path, out_path)
+    #save_npz('%s/playlist_track.npz' % out_path, playlist_track.tocsr(False))
+    #with open('%s/tracks_info.json' % out_path, 'w') as fp:
+    #  json.dump(tracks_info, fp, indent=4)
+    #with open("%s/tracks_info.json" % out_path) as f :
+    #  tracks_info = json.load(f)
     #process_album_artist(tracks_info)
-
     data_manager = DataManager()
-    #create_initial_embeddings(data_manager)
+    print(data_manager.binary_train_set)
+    create_initial_embeddings(data_manager)
     create_side_embeddings(data_manager)
 
 
