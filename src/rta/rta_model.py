@@ -92,7 +92,7 @@ class RTAModel(torch.nn.Module):
         self.train()
         return recos
         
-      def run_training(self, tuning=False):
+      def run_training(self, tuning=False, savePath=False):
         if tuning :
           test_evaluator, test_dataloader = self.data_manager.get_test_data("val")
         else : 
@@ -103,7 +103,9 @@ class RTAModel(torch.nn.Module):
         if "step_every" in self.training_params.keys():
           print_every = True
         start = time.time()
-        for epoch in range(3 * self.training_params['n_epochs']):
+        if savePath:
+          torch.save(self, savePath)
+        for epoch in range(self.training_params['n_epochs']):
           print("Epoch %d/%d" % (epoch,self.training_params['n_epochs']))
           print("Elapsed time : %.0f seconds" % (time.time() - start))
           for xx_pad, yy_pad_neg, x_lens in tqdm.tqdm(train_dataloader):
@@ -122,6 +124,8 @@ class RTAModel(torch.nn.Module):
                 r_prec = test_evaluator.compute_all_R_precisions(recos)
                 ndcg = test_evaluator.compute_all_ndcgs(recos)
                 click = test_evaluator.compute_all_clicks(recos)
-                print(r_prec.mean(), ndcg.mean(), click.mean())
+                print("rprec : %.3f, ndcg : %.3f, click : %.3f" % (r_prec.mean(), ndcg.mean(), click.mean()))
             batch_ct += 1
+          if savePath:
+            torch.save(self, savePath)
         return  

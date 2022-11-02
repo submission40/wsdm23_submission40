@@ -54,7 +54,7 @@ def process_mpd(raw_path, out_path):
     global playlists_list
     count = 0
     filenames = os.listdir(raw_path)
-    for filename in tqdm.tqdm(sorted(filenames)):
+    for filename in tqdm.tqdm(sorted(filenames, key=str)):
         if filename.startswith("mpd.slice.") and filename.endswith(".json"):
             playlists_list = []
             fullpath = os.sep.join((raw_path, filename))
@@ -279,13 +279,12 @@ if __name__ == "__main__":
     raw_path = sys.argv[1]
     out_path = sys.argv[2]
     os.makedirs(out_path, exist_ok=True)
-    #process_mpd(raw_path, out_path)
-    #save_npz('%s/playlist_track.npz' % out_path, playlist_track.tocsr(False))
-    #with open('%s/tracks_info.json' % out_path, 'w') as fp:
-    #  json.dump(tracks_info, fp, indent=4)
-    #with open("%s/tracks_info.json" % out_path) as f :
-    #  tracks_info = json.load(f)
-    #process_album_artist(tracks_info)
+    os.makedirs("ressources/models", exist_ok=True)
+    process_mpd(raw_path, out_path)
+    save_npz('%s/playlist_track.npz' % out_path, playlist_track.tocsr(False))
+    with open('%s/tracks_info.json' % out_path, 'w') as fp:
+      json.dump(tracks_info, fp, indent=4)
+    process_album_artist(tracks_info)
     data_manager = DataManager()
     print(data_manager.binary_train_set)
     create_initial_embeddings(data_manager)
