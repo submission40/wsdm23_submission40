@@ -7,7 +7,8 @@ RUN apt-get update && apt-get install -y ffmpeg \
     libgoogle-perftools4 \
     && mkdir -p /var/cache \
     && mkdir -p /var/probes && touch /var/probes/ready \
-    && pip install --upgrade --no-cache-dir poetry
+    && pip install --upgrade --no-cache-dir poetry \
+    && apt-get install -y graphviz
 
 # GSUTIL SDK
 # Downloading gcloud package
@@ -44,7 +45,11 @@ RUN pip install google-cloud-bigquery\
     GPUtil \
     pandas \
     einops \
-    implicit
+    implicit \
+    graphviz \
+    tables \
+    psutil \
+    pympler
 
 RUN pip install torch==1.11.0+cu102 \
     torchvision==0.12.0+cu102 \

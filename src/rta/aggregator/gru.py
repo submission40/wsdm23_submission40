@@ -4,7 +4,7 @@ from .base import AggregatorBase
 from src.rta.utils import get_device
 
 class GRUNet(AggregatorBase):
-    def __init__(self, vocab_size, input_dim, hidden_dim, output_dim, n_layers, drop_prob=0.2):
+    def __init__(self, input_dim, hidden_dim, output_dim, n_layers, drop_prob=0.2):
         super(GRUNet, self).__init__()
         self.hidden_dim = hidden_dim
         self.n_layers = n_layers
