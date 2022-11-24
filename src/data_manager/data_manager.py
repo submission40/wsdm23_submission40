@@ -142,7 +142,7 @@ class DataManager():
   def get_indices(self, set_name, resplit = False):
     if resplit:
       self.split_sets()
-    return np.load("%s/dataset_split/%s_indices.npy" % (self.foldername, set_name))
+    return np.load("%s/dataset_split/new_%s.npy" % (self.foldername, set_name))
       
   def get_valid_playlists(self, train_indices, test_indices):
     # removes playlists in test set that have songs with no occurence in the train set

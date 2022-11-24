@@ -7,10 +7,10 @@ class AttentionFMRepresenter(BaseEmbeddingRepresenter):
     def __init__(self,
               data_manager,
               emb_dim,
-              n_att_heads = 16,
+              n_att_heads = 1,
               n_att_layers = 1,
-              dropout_att=0.2):  
-      super().__init__(data_manager, d)
+              dropout_att=0.2):
+      super().__init__(data_manager, emb_dim)
       decoder_layer = CustomTransformerDecoderLayer(d_model=emb_dim, nhead=n_att_heads, dim_feedforward=1024, activation='gelu', dropout=dropout_att, batch_first =True)
       self.attention = nn.TransformerDecoder(decoder_layer, num_layers=n_att_layers)
       self.linear = nn.Linear(5, 1)
