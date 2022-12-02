@@ -161,7 +161,7 @@ class DataManager():
     if not n_start_songs:
       n_start_songs = self.min_songs_test
     indices = self.get_indices(set_name, resplit)
-    data = self.playlist_track[indices[1000 * (n_start_songs-1): 1000 * n_start_songs]] # select 1000 tracks fro this configuration
+    data = self.playlist_track[indices[1000 * (n_start_songs-1): 1000 * n_start_songs]] # select 1000 tracks for this configuration
     ground_truth_array = data.multiply(data > n_start_songs)
     ground_truth_first = data.multiply(data == (n_start_songs+1)) # first_track of ground_truth
     start_data = data - ground_truth_array
@@ -195,8 +195,8 @@ class DataManager():
     return test_evaluator, test_dataloader
   
 class negative_sampler(object):
-  """A class to speed up negative sampling. Instead of sampling uniformly everytime,
-  the whole list of tracks is shuffled then read by chunk. When the end of the list
+  """A class to speed up negative sampling. Instead of sampling uniformly at every call,
+  the whole list of tracks is shuffled once then read by chunk. When the end of the list
   is reached, it is shuffled again to start reading from the beginning etc..."""
 
   def __init__(self, n_max):

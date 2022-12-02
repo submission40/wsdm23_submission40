@@ -49,7 +49,8 @@ RUN pip install google-cloud-bigquery\
     graphviz \
     tables \
     psutil \
-    pympler
+    pympler \
+    seaborn
 
 RUN pip install torch==1.11.0+cu102 \
     torchvision==0.12.0+cu102 \

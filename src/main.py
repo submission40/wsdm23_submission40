@@ -21,7 +21,7 @@ if __name__ == "__main__":
   parser.add_argument("--recos_path", type = str, required = False,
                     help = "Path to save recos", default = "ressources/recos")
   parser.add_argument("--models_path", type = str, required = False,
-                    help = "Path to save models", default = "models/recos")
+                    help = "Path to save models", default = "ressources/models")
   args = parser.parse_args()
 
   data_manager = DataManager()
@@ -75,5 +75,5 @@ if __name__ == "__main__":
   recos = rta_model.compute_recos(test_dataloader)
   end_predict = time.time()
   print("Model %s inferred in %s " % (args.model_name, str(end_predict - end_fit)))
-  os.makedirs(args.recos_path)
+  os.makedirs(args.recos_path, exist_ok=True)
   np.save("%s/%s" % (args.recos_path, args.model_name), recos)
