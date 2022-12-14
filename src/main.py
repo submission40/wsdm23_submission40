@@ -11,6 +11,7 @@ from src.rta.aggregator.base import AggregatorBase
 from src.rta.representer.base_representer import BaseEmbeddingRepresenter
 from src.rta.representer.fm_representer import FMRepresenter
 from src.rta.representer.attention_representer import AttentionFMRepresenter
+import numpy as np
 
 if __name__ == "__main__":
   parser = argparse.ArgumentParser()
@@ -72,6 +73,7 @@ if __name__ == "__main__":
   rta_model.run_training(tuning=False, savePath=savePath)
   end_fit = time.time()
   print("Model %s trained in %s " % (args.model_name, str(end_fit - start_fit)))
+  test_evaluator, test_dataloader = data_manager.get_test_data("test")
   recos = rta_model.compute_recos(test_dataloader)
   end_predict = time.time()
   print("Model %s inferred in %s " % (args.model_name, str(end_predict - end_fit)))
