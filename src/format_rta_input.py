@@ -20,7 +20,7 @@ import csv
 import tqdm
 import pickle
 from collections import defaultdict
-
+import argparse
 from src.embeddings.model import MatrixFactorizationModel
 from src.data_manager.data_manager import DataManager
 
@@ -276,13 +276,17 @@ def create_side_embeddings(data_manager):
     np.save(data_manager.dur_embeddings_path, dur_embeddings)
 
 if __name__ == "__main__":
-    raw_path = sys.argv[1]
-    out_path = sys.argv[2]
-    os.makedirs(out_path, exist_ok=True)
+    parser = argparse.ArgumentParser()
+    parser.add_argument("--mpd_path", type=str, required=False, default="../MPD/data",
+                             help = "Path to MPD")
+    parser.add_argument("--out_path", type=str, required=False, default="ressources/data/rta_input",
+                             help = "Path to rta input")
+    args = parser.parse_args()
+    os.makedirs(args.out_path, exist_ok=True)
     os.makedirs("ressources/models", exist_ok=True)
-    process_mpd(raw_path, out_path)
-    save_npz('%s/playlist_track.npz' % out_path, playlist_track.tocsr(False))
-    with open('%s/tracks_info.json' % out_path, 'w') as fp:
+    process_mpd(args.mpd_path, args.out_path)
+    save_npz('%s/playlist_track.npz' % args.out_path, playlist_track.tocsr(False))
+    with open('%s/tracks_info.json' % args.out_path, 'w') as fp:
       json.dump(tracks_info, fp, indent=4)
     process_album_artist(tracks_info)
     data_manager = DataManager()
