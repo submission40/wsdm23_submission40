@@ -6,6 +6,7 @@ import sys
 from src.data_manager.data_manager import DataManager
 import json
 import math
+import argparse
 
 def process_playlists(mpd_path, out_path):
     count = 0
@@ -65,15 +66,19 @@ def prepare_test_input(data_manager, df_data):
   return df_train
 
 if __name__ == "__main__":
-    mpd_path = sys.argv[1]
-    out_path = sys.argv[2]
+    parser = argparse.ArgumentParser()
+    parser.add_argument("--mpd_path", type=str, required=False, default="../MPD/data",
+                        help = "Path to MPD")
+    parser.add_argument("--out_path", type=str, required=False, default="ressources/data/baselines",
+                        help = "Path to baselines input")
+    args = parser.parse_args()
 
-    os.makedirs(out_path, exist_ok=True)
+    os.makedirs(args.out_path, exist_ok=True)
     data_manager = DataManager()
-    process_playlists(mpd_path, out_path)
-    df_data = prepare_knn_data(data_manager, out_path)
-    df_data.to_hdf("%s/df_data" % out_path, "abc")
+    process_playlists(args.mpd_path, args.out_path)
+    df_data = prepare_knn_data(data_manager, args.out_path)
+    df_data.to_hdf("%s/df_data" % args.out_path, "abc")
     df_train_tune = prepare_val_input(data_manager, df_data)
-    df_train_tune.to_hdf("%s/df_train_for_val" % out_path, "abc")
+    df_train_tune.to_hdf("%s/df_train_for_val" % args.out_path, "abc")
     df_train_final = prepare_test_input(data_manager, df_data)
-    df_train_final.to_hdf("%s/df_train_for_test" % out_path, "abc")
+    df_train_final.to_hdf("%s/df_train_for_test" % args.out_path, "abc")
