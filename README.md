@@ -7,6 +7,7 @@ RTA models can be trained using main.py, however code to transform original Mill
 ```
 git clone https://github.com/submission40/wsdm23_submission40.git
 cd wsdm23_submission40
+pip install -R requirements.txt
 ```
 - download MPD https://www.aicrowd.com/challenges/spotify-million-playlist-dataset-challenge/dataset_files#:~:text=spotify_million_playlist_dataset.zip%20(5.39%20GB)
 You need to create an account and register to the challenge to be able to download the Million Playlist Dataset
