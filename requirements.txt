@@ -1,0 +1,9 @@
+matplotlib
+scipy
+tqdm
+pandas
+implicit
+tables
+psutil
+pympler
+seaborn
