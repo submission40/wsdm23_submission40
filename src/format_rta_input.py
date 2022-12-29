@@ -185,7 +185,7 @@ def process_playlist(playlist):
 def process_info(_):
     pass
 
-def process_album_artist( tracks_info):
+def process_album_artist( tracks_info, out_path):
     artist_songs = defaultdict(list)  # a dict where keys are artist ids and values are list of corresponding songs
     album_songs = defaultdict(list)  # a dict where keys are album ids and values are list of corresponding songs
     song_album = np.zeros(n_tracks)  # a 1-D array where the index is the track id and the value is the album id
@@ -288,7 +288,7 @@ if __name__ == "__main__":
     save_npz('%s/playlist_track.npz' % args.out_path, playlist_track.tocsr(False))
     with open('%s/tracks_info.json' % args.out_path, 'w') as fp:
       json.dump(tracks_info, fp, indent=4)
-    process_album_artist(tracks_info)
+    process_album_artist(tracks_info, args.out_path)
     data_manager = DataManager()
     print(data_manager.binary_train_set)
     create_initial_embeddings(data_manager)
