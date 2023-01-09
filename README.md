@@ -1,12 +1,12 @@
-# wsdm23_submission40
-Code to reproduce experiments described in the article submitted at WSDM 2023 is available here.
+# Represent then aggregate
+Code to reproduce experiments described in the article submitted at SIGIR 2023 is available here.
 RTA models can be trained using main.py, however code to transform original Million Playlist Dataset into the right format is missing for the moment.
 
 ## STEP 1 : Download and format dataset
 - clone the current project
 ```
-git clone https://github.com/submission40/wsdm23_submission40.git
-cd wsdm23_submission40
+git clone https://github.com/submission40/represent_then_aggregate.git
+cd represent_then_aggregate
 pip install -r requirements.txt
 ```
 - download MPD https://www.aicrowd.com/challenges/spotify-million-playlist-dataset-challenge/dataset_files#:~:text=spotify_million_playlist_dataset.zip%20(5.39%20GB)
